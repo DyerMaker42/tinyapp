@@ -11,7 +11,7 @@ const urlDatabase = {
 //said needs to come before routes
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
-//said outer scope
+//said outer scope, I think will replace Ok section in post later
 function generateRandomString() {
 
 }
