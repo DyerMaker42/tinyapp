@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 const PORT = 8080; // default port 8080
-
+//sets template engine
 app.set("view engine", "ejs");
-
+//where matched pairs will be stored
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
@@ -24,7 +24,7 @@ app.get("/urls.json", (req, res) => {
 app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
-
+//route handler for /urls
 app.get("/urls", (req, res) => {
   let templateVars = { urls: urlDatabase };
   res.render("urls_index", templateVars);
