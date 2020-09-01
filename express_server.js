@@ -13,7 +13,14 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 //said outer scope, I think will replace Ok section in post later
 function generateRandomString() {
-
+  const sixtyTwo = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  results = [];
+  
+  for(let i=0; i <= 6; i ++) {
+    let randomPos = Math.floor(Math.random()*(sixtyTwo.length+1));
+    results.push(sixtyTwo[randomPos])
+  }
+  return results.join('');
 }
 
 app.get("/", (req, res) => {
@@ -49,6 +56,6 @@ app.get("/urls/:shortURL", (req, res) => {
 
 app.post("/urls", (req, res) => {
   console.log(req.body);  // Log the POST request body to the console
-  res.send("ok");         // Respond with 'Ok' (we will replace this)
+  res.redirect("/url/shortURL");         // Respond with 'Ok' (we will replace this)
 });
 
