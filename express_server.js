@@ -57,8 +57,8 @@ app.get("/urls/:shortURL", (req, res) => {
 app.post("/urls", (req, res) => {
   let helperShortUrl = generateRandomString();
   urlDatabase[helperShortUrl] = req.body.longURL
-  console.log(req.body);
-  console.log(urlDatabase)  // Log the POST request body to the console
-  //res.redirect(`/urls/${helperShortUrl}`);         // Respond with 'Ok' (we will replace this)
+  //console.log(req.body);
+  //console.log(urlDatabase)  // Log the POST request body to the console
+  res.redirect(`/urls/${helperShortUrl}`);         // Respond with 'Ok' (we will replace this)
 });
 
