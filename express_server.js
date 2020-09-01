@@ -16,6 +16,11 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
+//Add the following route definition to express_server.js. Make sure to place this code above the app.get("/urls/:id", ...) route definition
+//putting at top as not sure what ^^ is referring to
+app.get("/urls/new", (req, res) => {
+  res.render("urls_new");
+});
 
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
