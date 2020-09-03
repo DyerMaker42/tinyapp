@@ -3,6 +3,7 @@ const app = express();
 const PORT = 8080; // default port 8080
 //sets template engine
 app.set("view engine", "ejs");
+
 //where matched pairs will be stored
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
@@ -10,6 +11,7 @@ const urlDatabase = {
 };
 //said needs to come before routes
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 //said outer scope, I think will replace Ok section in post later
 // helper function that generates the short URL
