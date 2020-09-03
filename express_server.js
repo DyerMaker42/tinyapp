@@ -82,3 +82,13 @@ app.post("/urls/:id", (req, res) => {
    urlDatabase[req.params.id] =req.body.updated_URL;
   res.redirect("/urls")
 })
+
+app.get("/login", (req, res) => {
+  
+})
+
+app.post("/login", (req, res) => {
+  //receive login button press
+  console.log('req', req, "req.params", req.params)
+  res.redirect("/urls")
+})
