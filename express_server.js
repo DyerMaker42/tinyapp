@@ -85,7 +85,7 @@ app.post("/urls/:id", (req, res) => {
    urlDatabase[req.params.id] =req.body.updated_URL;
   res.redirect("/urls")
 })
-
+//login request
 app.get("/login", (req, res) => {
   console.log("!!!req", req.body)
   res.redirect("/urls")
@@ -96,6 +96,19 @@ app.post("/login", (req, res) => {
   let username = req.body["username"];
   //console.log("BODY",req.body.username)
   res.cookie('username', username)
+  //receive login button press
+  console.log(username )
+  res.redirect("/urls")
+})
+//logout request
+app.get("/logout", (req, res) => {
+  console.log("!!!req", req.body)
+  res.redirect("/urls")
+})
+// removes cookie
+app.post("/logout", (req, res) => {
+  let username = req.body["username"];
+  res.clearCookie('username', username)
   //receive login button press
   console.log(username )
   res.redirect("/urls")
