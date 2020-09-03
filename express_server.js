@@ -13,13 +13,13 @@ const urlDatabase = {
 //user object
 const users = {
   "userRandomID": {
-    id: "userRandomID", 
-    email: "user@example.com", 
+    id: "userRandomID",
+    email: "user@example.com",
     password: "purple-monkey-dinosaur"
   },
- "user2RandomID": {
-    id: "user2RandomID", 
-    email: "user2@example.com", 
+  "user2RandomID": {
+    id: "user2RandomID",
+    email: "user2@example.com",
     password: "dishwasher-funk"
   }
 }
@@ -27,14 +27,14 @@ const users = {
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 app.use(cookieParser())
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 //said outer scope, I think will replace Ok section in post later
 // helper function that generates the short URL
 function generateRandomString() {
   const sixtyTwo = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   results = [];
-  for(let i=0; i <= 6; i ++) {
-    let randomPos = Math.floor(Math.random()*(sixtyTwo.length+1));
+  for (let i = 0; i <= 6; i++) {
+    let randomPos = Math.floor(Math.random() * (sixtyTwo.length + 1));
     results.push(sixtyTwo[randomPos])
   }
   return results.join('');
@@ -50,7 +50,7 @@ app.listen(PORT, () => {
 //Add the following route definition to express_server.js. Make sure to place this code above the app.get("/urls/:id", ...) route definition
 //putting at top as not sure what ^^ is referring to
 app.get("/urls/new", (req, res) => {
-  let templateVars = { username: req.cookies["username"]}
+  let templateVars = { username: req.cookies["username"] }
   res.render("urls_new", templateVars);
 });
 
@@ -69,7 +69,7 @@ app.get("/urls", (req, res) => {
 });
 
 app.get("/urls/:shortURL", (req, res) => {
-  let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], username: req.cookies["username"]};
+  let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], username: req.cookies["username"] };
   res.render("urls_show", templateVars);
 });
 
@@ -94,12 +94,11 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 
 app.post("/urls/:id", (req, res) => {
   // console.log(req.params)
-   urlDatabase[req.params.id] =req.body.updated_URL;
+  urlDatabase[req.params.id] = req.body.updated_URL;
   res.redirect("/urls")
 });
 //login request
 app.get("/login", (req, res) => {
-  console.log("!!!req", req.body)
   res.redirect("/urls")
 });
 //logs cookie
@@ -109,7 +108,7 @@ app.post("/login", (req, res) => {
   //console.log("BODY",req.body.username)
   res.cookie('username', username)
   //receive login button press
-  console.log(username )
+  console.log(username)
   res.redirect("/urls")
 });
 //logout request
@@ -126,24 +125,26 @@ app.post("/logout", (req, res) => {
   res.redirect("/urls")
 });
 
-app.get("/register", (req,res)=>{
-  let templateVars = {users,
-    
-     //check to make sure, username is checking for correct cookie variable
-    username: req.cookies["username"]};
+app.get("/register", (req, res) => {
+  let templateVars = {
+    users,
+
+    //check to make sure, username is checking for correct cookie variable
+    username: req.cookies["username"]
+  };
   console.log("eat cake");
-  res.render("register",templateVars)
+  res.render("register", templateVars)
 });
 
 app.post("/register", (req, res) => {
   console.log('user body', req.body)
   const generateUserName = generateRandomString()
   users[generateUserName] = {
-    id:generateUserName,
-    email:req.body.email,
-    password:req.body.password
+    id: generateUserName,
+    email: req.body.email,
+    password: req.body.password
   }
-  console.log('helo',users)
+  console.log('helo', users)
   res.cookie('user_id', generateUserName)
   res.redirect("/urls");
 });
