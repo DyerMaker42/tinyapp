@@ -84,11 +84,14 @@ app.post("/urls/:id", (req, res) => {
 })
 
 app.get("/login", (req, res) => {
-  
+  console.log("!!!req")
+  res.redirect("/urls")
 })
 
 app.post("/login", (req, res) => {
+  let username = res.param[username_login]
+  res.cookie('username', username)
   //receive login button press
-  console.log('req', req, "req.params", req.params)
+  console.log(username )
   res.redirect("/urls")
 })
