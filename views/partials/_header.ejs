@@ -9,6 +9,11 @@
         <a class="nav-item nav-link" href="/urls">My URLs</a>
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
         <!-- <a class="nav-item nav-link" href="/login">Login</a> -->
+         <%= if (req.body["username"]) => { %>
+          <form action="/logout" method="POST"
+            <label for="username_logout"></label>
+            <input id="logout" type="text" name="logout" value= <%= username %>>
+          <%= } %>
         <form action="/login" method="POST">
           <label for="username_login"></label>
           <input id="username" type="text" name="username" value="Username">
