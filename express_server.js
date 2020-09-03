@@ -127,11 +127,16 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/register", (req,res)=>{
-  console.log("eat shit")
-  res.render("registration")
+  let templateVars = { shortURL: req.params.shortURL, 
+    longURL: urlDatabase[req.params.shortURL], 
+    //check to make sure, username is checking for correct cookie variable
+    username: req.cookies["username"]};
+  console.log("eat cake")
+  res.render("register",templateVars)
 });
 
 app.post("/register", (req, res) => {
+  console.log('user body', req.body)
   const generateUserName = generateRandomString().slice(2)
   users.generateUserName = {
     id:generateUserName,
