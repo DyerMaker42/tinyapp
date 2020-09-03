@@ -9,11 +9,12 @@
         <a class="nav-item nav-link" href="/urls">My URLs</a>
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
         <!-- <a class="nav-item nav-link" href="/login">Login</a> -->
-        <form action="/urls/login" method="post">
+        <form action="/login" method="POST">
           <label for="username_login"></label>
           <input id="username" type="text" name="username" value="Username">
-          <a href="/login"></ahref><button type="button" class="btn btn-outline-dark" >Login</button></a>
+          <button type="submit" class="btn btn-outline-dark" >Login</button>
       </form>
+      <h1><%= username %></h1>
       </div>
     </div>
   </nav>

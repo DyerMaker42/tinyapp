@@ -12,6 +12,7 @@ const urlDatabase = {
 //said needs to come before routes
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended: true}));
 //said outer scope, I think will replace Ok section in post later
 // helper function that generates the short URL
@@ -35,7 +36,8 @@ app.listen(PORT, () => {
 //Add the following route definition to express_server.js. Make sure to place this code above the app.get("/urls/:id", ...) route definition
 //putting at top as not sure what ^^ is referring to
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
+  let templateVars = { username: req.cookies["username"]}
+  res.render("urls_new", templateVars);
 });
 
 app.get("/urls.json", (req, res) => {
@@ -47,12 +49,13 @@ app.get("/hello", (req, res) => {
 });
 //route handler for /urls
 app.get("/urls", (req, res) => {
-  let templateVars = { urls: urlDatabase };
+  console.log(req.cookies["username"])
+  let templateVars = { urls: urlDatabase, username: req.cookies["username"] };
   res.render("urls_index", templateVars);
 });
 
 app.get("/urls/:shortURL", (req, res) => {
-  let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL]};
+  let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], username: req.cookies["username"]};
   res.render("urls_show", templateVars);
 });
 
@@ -84,12 +87,13 @@ app.post("/urls/:id", (req, res) => {
 })
 
 app.get("/login", (req, res) => {
-  console.log("!!!req")
+  console.log("!!!req", req.body)
   res.redirect("/urls")
 })
 
 app.post("/login", (req, res) => {
-  let username = res.param[username_login]
+  let username = req.body["username"]
+  console.log("BODY",req.body.username)
   res.cookie('username', username)
   //receive login button press
   console.log(username )
