@@ -128,5 +128,14 @@ app.post("/logout", (req, res) => {
 
 app.get("/register", (req,res)=>{
   console.log("eat shit")
-  res.redirect("/registration")
+  res.render("registration")
+});
+
+app.post("/register", (req, res) => {
+  const generateUserName = generateRandomString().slice(2)
+  users.generateUserName = {
+    id:generateUserName,
+    email:req.body.email,
+    password:req.body.password
+  }
 });
