@@ -90,6 +90,7 @@ app.get("/login", (req, res) => {
   console.log("!!!req", req.body)
   res.redirect("/urls")
 })
+//logs cookie
 
 app.post("/login", (req, res) => {
   let username = req.body["username"]
