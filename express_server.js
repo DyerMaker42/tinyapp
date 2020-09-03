@@ -122,25 +122,28 @@ app.post("/logout", (req, res) => {
   let username = req.body["username"];
   res.clearCookie('username', username)
   //receive login button press
-  console.log(username )
+  //console.log(username )
   res.redirect("/urls")
 });
 
 app.get("/register", (req,res)=>{
-  let templateVars = { shortURL: req.params.shortURL, 
-    longURL: urlDatabase[req.params.shortURL], 
-    //check to make sure, username is checking for correct cookie variable
+  let templateVars = {users,
+    
+     //check to make sure, username is checking for correct cookie variable
     username: req.cookies["username"]};
-  console.log("eat cake")
+  console.log("eat cake");
   res.render("register",templateVars)
 });
 
 app.post("/register", (req, res) => {
   console.log('user body', req.body)
-  const generateUserName = generateRandomString().slice(2)
-  users.generateUserName = {
+  const generateUserName = generateRandomString()
+  users[generateUserName] = {
     id:generateUserName,
     email:req.body.email,
     password:req.body.password
   }
+  console.log('helo',users)
+  res.cookie('user_id', generateUserName)
+  res.redirect("/urls");
 });

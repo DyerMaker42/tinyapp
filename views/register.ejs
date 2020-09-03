@@ -15,7 +15,7 @@
   <%- include('partials/_header') %>
   <main style="margin: 1em;">
     <h3>User Registration </h3>
-
+    <form action="/register" method="POST">
     <div class="form-group"></div>
     <input action="/register" method="POST" type="email" name="email" class="form-control col-md-6"
       id="exampleInputEmail1" placeholder="Enter email" />
@@ -24,6 +24,8 @@
     <label for="exampleInputPassword1">Password</label>
     <input action="/register" method="POST" type="password" name="password" class="form-control"
       id="exampleInputPassword1" placeholder="Password" />
+      <button type="submit" action"/register" class="btn btn-primary">Submit</button>  
+    </form>
   </main>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
