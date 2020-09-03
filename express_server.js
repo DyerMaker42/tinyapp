@@ -93,8 +93,8 @@ app.get("/login", (req, res) => {
 //logs cookie
 
 app.post("/login", (req, res) => {
-  let username = req.body["username"]
-  console.log("BODY",req.body.username)
+  let username = req.body["username"];
+  //console.log("BODY",req.body.username)
   res.cookie('username', username)
   //receive login button press
   console.log(username )
