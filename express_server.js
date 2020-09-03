@@ -78,18 +78,16 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   res.redirect("/urls")
 });
 
-
-
 app.post("/urls/:id", (req, res) => {
   // console.log(req.params)
    urlDatabase[req.params.id] =req.body.updated_URL;
   res.redirect("/urls")
-})
+});
 //login request
 app.get("/login", (req, res) => {
   console.log("!!!req", req.body)
   res.redirect("/urls")
-})
+});
 //logs cookie
 
 app.post("/login", (req, res) => {
@@ -99,12 +97,12 @@ app.post("/login", (req, res) => {
   //receive login button press
   console.log(username )
   res.redirect("/urls")
-})
+});
 //logout request
 app.get("/logout", (req, res) => {
   console.log("!!!req", req.body)
   res.redirect("/urls")
-})
+});
 // removes cookie
 app.post("/logout", (req, res) => {
   let username = req.body["username"];
@@ -112,4 +110,9 @@ app.post("/logout", (req, res) => {
   //receive login button press
   console.log(username )
   res.redirect("/urls")
-})
+});
+
+app.get("/register", (req,res)=>{
+  console.log("eat shit")
+  res.redirect("/registration")
+});
