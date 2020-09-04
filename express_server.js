@@ -39,7 +39,17 @@ function generateRandomString() {
   }
   return results.join('');
 }
+//helper function that retrieves user id bu email, 
+function getUserbyEmail(userEmail, users) {
+  for (let key in users) {
+    //console.log(key,"key")
+    if (users[key].email === userEmail) {
+      return users[key].id
+    }
 
+  }
+
+};
 app.get("/", (req, res) => {
   res.send("Hello!");
 });
@@ -108,22 +118,23 @@ app.post("/urls/:id", (req, res) => {
 //login request
 app.get("/login", (req, res) => {
   const userOb = (req.cookies["user_id"])
-    templateVars = { user: users[userOb] }
+  templateVars = { user: users[userOb] }
   res.render("login", templateVars)
 });
 //logs cookie
 
 app.post("/login", (req, res) => {
   //old let username = req.body["username"];
-  console.log("req.body.email",req.body.email, "req.body.password",req.body.password)
-  for (let user in users) {
-    console.log(users[user])
-  }
+  console.log("req.body.email in post", req.body.email, "req.body.password", req.body.password, "req body id", req.body.id)
+  // for (let user in users) {
+  //   console.log(users[user])
+  // }
   //console.log("BODY",req.body.username)
-  res.cookie('user_id', req.body["username"])
-  console.log("req body username", req.body["username"])
+  let postUserID = getUserbyEmail(req.body.email, users)
+  res.cookie('user_id', postUserID )
+  //console.log("req body username", req.body["username"])
   //receive login button press
-  //res.redirect("/urls")
+  res.redirect("/urls")
 });
 //logout request
 app.get("/logout", (req, res) => {
