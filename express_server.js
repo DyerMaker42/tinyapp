@@ -50,6 +50,18 @@ function getUserbyEmail(userEmail, users) {
   }
 
 };
+//helperfunction that outputs values based in which input and desired output
+function getUserby(inputValue, users, inputParameter, desiredOutput) {
+  for (let key in users) {
+    //console.log(key,"key")
+    if (users[key][inputParameter] === inputValue) {
+      return users[key][desiredOutput]
+    }
+
+  }
+
+}
+// example getUserby("user@example.com", users, "email", "id") userRandomID;
 app.get("/", (req, res) => {
   res.send("Hello!");
 });
@@ -131,6 +143,7 @@ app.post("/login", (req, res) => {
   // }
   //console.log("BODY",req.body.username)
   let postUserID = getUserbyEmail(req.body.email, users)
+  if(getUserby(req.body.email,users,"email","id")===getUserby(req.body.password, users,"password","id"))
   res.cookie('user_id', postUserID )
   //console.log("req body username", req.body["username"])
   //receive login button press
