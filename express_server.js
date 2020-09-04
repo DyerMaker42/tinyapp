@@ -107,6 +107,8 @@ app.post("/urls/:id", (req, res) => {
 });
 //login request
 app.get("/login", (req, res) => {
+  const userOb = (req.cookies["user_id"])
+    templateVars = { user: users[userOb] }
   res.render("login")
 });
 //logs cookie
