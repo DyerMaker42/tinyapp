@@ -107,7 +107,7 @@ app.post("/urls/:id", (req, res) => {
 });
 //login request
 app.get("/login", (req, res) => {
-  res.redirect("/urls")
+  res.redirect("login")
 });
 //logs cookie
 
