@@ -115,6 +115,7 @@ app.get("/login", (req, res) => {
 
 app.post("/login", (req, res) => {
   //old let username = req.body["username"];
+  console.log("req.body.email",req.body.email, "req.body.password",req.body.password)
   for (let user in users) {
     console.log(users[user])
   }
