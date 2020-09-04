@@ -16,6 +16,11 @@
           <button action="/login" method="POST" id="username" name="username" type="submit"
             class="btn btn-outline-dark">Login</button>
         </form>
+        <form>
+          <label for="username_registration"></label>
+          <button action="/register" method="POST" id="username" name="username" type="submit"
+            class="btn btn-outline-dark">Register</button>
+        </form>
         <% } else {%>
         <a class="navbar-text">Logged In As <%= user.email %>! </a>
         <form action="/logout" method="POST">
