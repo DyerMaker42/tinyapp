@@ -83,7 +83,7 @@ app.get("/urls/:shortURL", (req, res) => {
 app.post("/urls", (req, res) => {
   let helperShortUrl = generateRandomString();
   urlDatabase[helperShortUrl] = req.body.longURL
-    //console.log(req.body);
+  //console.log(req.body);
   //console.log(urlDatabase)  // Log the POST request body to the console
   res.redirect(`/urls/${helperShortUrl}`);         // Respond with 'Ok' (we will replace this)
 });
@@ -107,7 +107,7 @@ app.post("/urls/:id", (req, res) => {
 });
 //login request
 app.get("/login", (req, res) => {
-  res.redirect("login")
+  res.render("login")
 });
 //logs cookie
 
@@ -118,9 +118,9 @@ app.post("/login", (req, res) => {
   }
   //console.log("BODY",req.body.username)
   res.cookie('user_id', req.body["username"])
-  console.log("req body username",req.body["username"])
+  console.log("req body username", req.body["username"])
   //receive login button press
-  res.redirect("/urls")
+  //res.redirect("/urls")
 });
 //logout request
 app.get("/logout", (req, res) => {
@@ -142,7 +142,7 @@ app.get("/register", (req, res) => {
   }
   else {
     const userOb = (req.cookies["user_id"])
-    templateVars = {user: users[userOb]}
+    templateVars = { user: users[userOb] }
     res.render("register", templateVars)
   }
 });
