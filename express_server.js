@@ -50,7 +50,9 @@ app.listen(PORT, () => {
 //Add the following route definition to express_server.js. Make sure to place this code above the app.get("/urls/:id", ...) route definition
 //putting at top as not sure what ^^ is referring to
 app.get("/urls/new", (req, res) => {
-  let templateVars = { username: req.cookies["username"] }
+
+  //old let templateVars = { username: req.cookies["username"] }
+  let templateVars = { users }
   res.render("urls_new", templateVars);
 });
 
@@ -63,25 +65,31 @@ app.get("/hello", (req, res) => {
 });
 //route handler for /urls
 app.get("/urls", (req, res) => {
-  console.log(req.cookies["username"])
-  let templateVars = { urls: urlDatabase, username: req.cookies["username"] };
+  const userOb = (req.cookies["user_id"])
+  // const userOb = users[req.cookies("user_id")]
+  // old let templateVars = { urls: urlDatabase, username: req.cookies["username"] };
+  let templateVars = { urls: urlDatabase, user: users[userOb] }
+  console.log(users[userOb], "userOb")
   res.render("urls_index", templateVars);
 });
 
 app.get("/urls/:shortURL", (req, res) => {
-  let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], username: req.cookies["username"] };
+  const userOb = (req.cookies["user_id"])
+  // let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], username: req.cookies["username"] };
+  let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], user: users[userOb] };
   res.render("urls_show", templateVars);
 });
 
 app.post("/urls", (req, res) => {
   let helperShortUrl = generateRandomString();
   urlDatabase[helperShortUrl] = req.body.longURL
-  //console.log(req.body);
+    //console.log(req.body);
   //console.log(urlDatabase)  // Log the POST request body to the console
   res.redirect(`/urls/${helperShortUrl}`);         // Respond with 'Ok' (we will replace this)
 });
 
 app.get("/u/:shortURL", (req, res) => {
+
   const longURL = urlDatabase[req.params.shortURL]
   res.redirect(longURL);
 });
@@ -104,11 +112,14 @@ app.get("/login", (req, res) => {
 //logs cookie
 
 app.post("/login", (req, res) => {
-  let username = req.body["username"];
+  //old let username = req.body["username"];
+  for (let user in users) {
+    console.log(users[user])
+  }
   //console.log("BODY",req.body.username)
-  res.cookie('username', username)
+  res.cookie('user_id', req.body["username"])
+  console.log("req body username",req.body["username"])
   //receive login button press
-  console.log(username)
   res.redirect("/urls")
 });
 //logout request
@@ -118,22 +129,22 @@ app.get("/logout", (req, res) => {
 });
 // removes cookie
 app.post("/logout", (req, res) => {
-  let username = req.body["username"];
-  res.clearCookie('username', username)
+  // old let username = req.body["username"];
+  res.clearCookie('user_id')
   //receive login button press
   //console.log(username )
   res.redirect("/urls")
 });
 
 app.get("/register", (req, res) => {
-  let templateVars = {
-    users,
-
-    //check to make sure, username is checking for correct cookie variable
-    username: req.cookies["username"]
-  };
-  console.log("eat cake");
-  res.render("register", templateVars)
+  if (req.cookies["user_id"]) {
+    res.redirect("/urls")
+  }
+  else {
+    const userOb = (req.cookies["user_id"])
+    templateVars = {user: users[userOb]}
+    res.render("register", templateVars)
+  }
 });
 
 app.post("/register", (req, res) => {
