@@ -149,11 +149,11 @@ app.post("/login", (req, res) => {
     res.cookie('user_id', postUserID)
     res.redirect("/urls")
   } else if (getUserby(req.body.email,users,"email","email")===req.body.email || getUserby(req.body.password,users,"password","password")===req.body.password) {
-    console.log("no login for you");
-    res.status(403).send('<p href=/login> Your password is wrong. </p>')
+    //console.log("no login for you");
+    res.status(403).send('<p href=/login> Username and/or password combination does not match our records, please check and try again. </p>')
     
     
-    //return error username or password does not match our records, please check and try again.
+    //return error 
   }
   //console.log("req body username", req.body["username"])
   //receive login button press
