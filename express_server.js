@@ -72,7 +72,11 @@ app.listen(PORT, () => {
 //Add the following route definition to express_server.js. Make sure to place this code above the app.get("/urls/:id", ...) route definition
 //putting at top as not sure what ^^ is referring to
 app.get("/urls/new", (req, res) => {
-
+  const userOb = (req.cookies["user_id"])
+  // const userOb = users[req.cookies("user_id")]
+  // old let templateVars = { urls: urlDatabase, username: req.cookies["username"] };
+  
+  let templateVars = { urls: urlDatabase, user: users[userOb] }
   //old let templateVars = { username: req.cookies["username"] }
   let templateVars = { users }
   res.render("urls_new", templateVars);
