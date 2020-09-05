@@ -6,8 +6,8 @@ app.set("view engine", "ejs");
 
 //where matched pairs will be stored
 const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  "b6UTxQ": { longURL: "https://www.tsn.ca", userID: "userRandomID" },
+  "i3BoGr": { longURL: "https://www.google.ca", userID: "userRandomID" }
 };
 
 //user object
@@ -112,7 +112,8 @@ app.get("/urls/:shortURL", (req, res) => {
 
 app.post("/urls", (req, res) => {
   let helperShortUrl = generateRandomString();
-  urlDatabase[helperShortUrl] = req.body.longURL
+  urlDatabase[helperShortUrl].longURL = req.body.longURL
+  urlDatabase[helperShortUrl].userID = req.cookies["user_id"]
   //console.log(req.body);
   //console.log(urlDatabase)  // Log the POST request body to the console
   res.redirect(`/urls/${helperShortUrl}`);         // Respond with 'Ok' (we will replace this)
@@ -120,13 +121,13 @@ app.post("/urls", (req, res) => {
 
 app.get("/u/:shortURL", (req, res) => {
 
-  const longURL = urlDatabase[req.params.shortURL]
+  const longURL = urlDatabase[req.params.shortURL].longURL
   res.redirect(longURL);
 });
 
 app.post("/urls/:shortURL/delete", (req, res) => {
   console.log(req.params.shortURL)
-  delete urlDatabase[req.params.shortURL]
+  delete urlDatabase[req.params.shortURL].longURL
   res.redirect("/urls")
 });
 
