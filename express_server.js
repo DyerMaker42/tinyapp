@@ -132,26 +132,32 @@ app.get("/login", (req, res) => {
   const userOb = (req.cookies["user_id"])
   templateVars = { user: users[userOb] }
   res.render("login", templateVars)
+  
 });
 //logs cookie
 
 app.post("/login", (req, res) => {
   //old let username = req.body["username"];
-  console.log("req.body.email in post", req.body.email, "req.body.password", req.body.password, "req body id", req.body.id)
+  //console.log("req.body.email in post", req.body.email, "req.body.password", req.body.password, "req body id", req.body.id)
   // for (let user in users) {
   //   console.log(users[user])
   // }
   //console.log("BODY",req.body.username)
   let postUserID = getUserbyEmail(req.body.email, users)
   if (getUserby(req.body.email, users, "email", "id") === getUserby(req.body.password, users, "password", "id")) {
+    console.log("if works")
     res.cookie('user_id', postUserID)
+    res.redirect("/urls")
   } else if (getUserby(req.body.email,users,"email","email")===req.body.email || getUserby(req.body.password,users,"password","password")===req.body.password) {
     console.log("no login for you");
+    res.status(403).send('<p href=/login> Your password is wrong. </p>')
+    
+    
     //return error username or password does not match our records, please check and try again.
   }
   //console.log("req body username", req.body["username"])
   //receive login button press
-  res.redirect("/urls")
+  
 });
 //logout request
 app.get("/logout", (req, res) => {

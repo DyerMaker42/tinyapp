@@ -11,9 +11,9 @@
         <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
 
         <% if ( !user || !user.id ) { %>
-        <form>
+        <form action="/login" method="GET">
           <label for="userID_login"></label>
-          <button action="/login" method="GET" id="userID" name="userID" type="submit"
+          <button  id="userID" name="userID" type="submit"
             class="btn btn-outline-dark">Login</button>
         </form>
         <form>
