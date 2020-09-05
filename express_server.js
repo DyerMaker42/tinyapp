@@ -77,9 +77,13 @@ app.get("/urls/new", (req, res) => {
   // old let templateVars = { urls: urlDatabase, username: req.cookies["username"] };
   
   let templateVars = { urls: urlDatabase, user: users[userOb] }
+  if(userOb){
   //old let templateVars = { username: req.cookies["username"] }
-  let templateVars = { users }
+  // newerold let templateVars = { users }
   res.render("urls_new", templateVars);
+  } else { 
+    res.redirect("/login");
+  }
 });
 
 app.get("/urls.json", (req, res) => {
