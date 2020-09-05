@@ -188,16 +188,18 @@ app.post("/register", (req, res) => {
 
   //console.log('user body', req.body)
   const generateUserID = generateRandomString()
-  if (!users[generateUserID]) {
+  if (!users[generateUserID]&& !getUserby(req.body.email, users,"email","id")) {
     users[generateUserID] = {
       id: generateUserID,
       email: req.body.email,
       password: req.body.password
     }
+    res.cookie('user_id', generateUserID)
+    res.redirect("/urls");
+
   } else {
-    //return error 403
+    res.status(403).send('<p href=/register> Username already exists please try again. </p>')
   }
-  console.log('helo', users)
-  res.cookie('user_id', generateUserID)
-  res.redirect("/urls");
+  //console.log('helo', users)
+
 });
