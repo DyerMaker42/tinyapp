@@ -111,10 +111,12 @@ app.get("/urls/:shortURL", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
+  console.log(req.body.longURL);
+  
   let helperShortUrl = generateRandomString();
-  urlDatabase[helperShortUrl].longURL = req.body.longURL
-  urlDatabase[helperShortUrl].userID = req.cookies["user_id"]
-  //console.log(req.body);
+  urlDatabase[helperShortUrl] = {longURL: req.body.longURL, userID: req.cookies["user_id"]}
+  
+ 
   //console.log(urlDatabase)  // Log the POST request body to the console
   res.redirect(`/urls/${helperShortUrl}`);         // Respond with 'Ok' (we will replace this)
 });
