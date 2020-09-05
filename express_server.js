@@ -143,8 +143,13 @@ app.post("/login", (req, res) => {
   // }
   //console.log("BODY",req.body.username)
   let postUserID = getUserbyEmail(req.body.email, users)
-  if(getUserby(req.body.email,users,"email","id")===getUserby(req.body.password, users,"password","id"))
-  res.cookie('user_id', postUserID )
+  if (getUserby(req.body.email, users, "email", "id") === getUserby(req.body.password, users, "password", "id")) {
+    res.cookie('user_id', postUserID)
+  } else if (getUserby(req.body.email,users,"email","email")===req.body.email || getUserby(req.body.password,users,"password","password")===req.body.password){
+    //return error username or password does not match our records, please check and try again.
+  }
+
+  }
   //console.log("req body username", req.body["username"])
   //receive login button press
   res.redirect("/urls")
@@ -175,14 +180,19 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  console.log('user body', req.body)
-  const generateUserName = generateRandomString()
-  users[generateUserName] = {
-    id: generateUserName,
-    email: req.body.email,
-    password: req.body.password
+
+  //console.log('user body', req.body)
+  const generateUserID = generateRandomString()
+  if (!users[generateUserID]) {
+    users[generateUserID] = {
+      id: generateUserID,
+      email: req.body.email,
+      password: req.body.password
+    }
+  } else {
+    //return error 403
   }
   console.log('helo', users)
-  res.cookie('user_id', generateUserName)
+  res.cookie('user_id', generateUserID)
   res.redirect("/urls");
 });
