@@ -145,10 +145,9 @@ app.post("/login", (req, res) => {
   let postUserID = getUserbyEmail(req.body.email, users)
   if (getUserby(req.body.email, users, "email", "id") === getUserby(req.body.password, users, "password", "id")) {
     res.cookie('user_id', postUserID)
-  } else if (getUserby(req.body.email,users,"email","email")===req.body.email || getUserby(req.body.password,users,"password","password")===req.body.password){
+  } else if (getUserby(req.body.email,users,"email","email")===req.body.email || getUserby(req.body.password,users,"password","password")===req.body.password) {
+    console.log("no login for you");
     //return error username or password does not match our records, please check and try again.
-  }
-
   }
   //console.log("req body username", req.body["username"])
   //receive login button press

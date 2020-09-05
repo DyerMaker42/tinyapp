@@ -12,13 +12,13 @@
 
         <% if ( !user || !user.id ) { %>
         <form>
-          <label for="username_login"></label>
-          <button action="/login" method="GET" id="username" name="username" type="submit"
+          <label for="userID_login"></label>
+          <button action="/login" method="GET" id="userID" name="userID" type="submit"
             class="btn btn-outline-dark">Login</button>
         </form>
         <form>
-          <label for="username_registration"></label>
-          <button action="/register" method="GET" id="username" name="username" type="submit"
+          <label for="userID_registration"></label>
+          <button action="/register" method="GET" id="userID" name="userID" type="submit"
             class="btn btn-outline-dark">Register</button>
         </form>
         <% } else {%>
