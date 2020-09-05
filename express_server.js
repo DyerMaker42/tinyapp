@@ -132,7 +132,7 @@ app.get("/login", (req, res) => {
   const userOb = (req.cookies["user_id"])
   templateVars = { user: users[userOb] }
   res.render("login", templateVars)
-  
+
 });
 //logs cookie
 
@@ -145,19 +145,19 @@ app.post("/login", (req, res) => {
   //console.log("BODY",req.body.username)
   let postUserID = getUserbyEmail(req.body.email, users)
   if (getUserby(req.body.email, users, "email", "id") === getUserby(req.body.password, users, "password", "id")) {
-    console.log("if works")
+    //console.log("if works")
     res.cookie('user_id', postUserID)
     res.redirect("/urls")
-  } else if (getUserby(req.body.email,users,"email","email")===req.body.email || getUserby(req.body.password,users,"password","password")===req.body.password) {
+  } else if (getUserby(req.body.email, users, "email", "email") === req.body.email || getUserby(req.body.password, users, "password", "password") === req.body.password) {
     //console.log("no login for you");
     res.status(403).send('<p href=/login> Username and/or password combination does not match our records, please check and try again. </p>')
-    
-    
+
+
     //return error 
   }
   //console.log("req body username", req.body["username"])
   //receive login button press
-  
+
 });
 //logout request
 app.get("/logout", (req, res) => {
