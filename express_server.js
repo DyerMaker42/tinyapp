@@ -76,7 +76,7 @@ app.get("/urls/new", (req, res) => {
   // const userOb = users[req.cookies("user_id")]
   // old let templateVars = { urls: urlDatabase, username: req.cookies["username"] };
   
-  let templateVars = { urls: urlDatabase, user: users[userOb] }
+  let templateVars = { urls: urlDatabase, user: users[userOb], userID: userOb }
   if(userOb){
   //old let templateVars = { username: req.cookies["username"] }
   // newerold let templateVars = { users }
@@ -98,7 +98,7 @@ app.get("/urls", (req, res) => {
   const userOb = (req.cookies["user_id"])
   // const userOb = users[req.cookies("user_id")]
   // old let templateVars = { urls: urlDatabase, username: req.cookies["username"] };
-  let templateVars = { urls: urlDatabase, user: users[userOb] }
+  let templateVars = { urls: urlDatabase, user: users[userOb], userID: req.cookies["user_id"] }
   console.log(users[userOb], "userOb")
   res.render("urls_index", templateVars);
 });
@@ -124,8 +124,12 @@ app.post("/urls", (req, res) => {
 app.get("/u/:shortURL", (req, res) => {
 
   const longURL = urlDatabase[req.params.shortURL]
-  console.log(longURL,"longURL",urlDatabase[req.params.shortURL], "longURL 1212")
-  res.redirect(longURL);
+  if (longURL) {
+  console.log(longURL,"longURL",urlDatabase[req.params.shortURL].longURL, "longURL 1212");
+  res.redirect(longURL.longURL);
+  } else {
+    res.status(404).send("could not find URL you requested")
+  }
 });
 
 app.post("/urls/:shortURL/delete", (req, res) => {
