@@ -115,7 +115,7 @@ app.post("/urls", (req, res) => {
   
   let helperShortUrl = generateRandomString();
   urlDatabase[helperShortUrl] = {longURL: req.body.longURL, userID: req.cookies["user_id"]}
-  
+  console.log(urlDatabase)
  
   //console.log(urlDatabase)  // Log the POST request body to the console
   res.redirect(`/urls/${helperShortUrl}`);         // Respond with 'Ok' (we will replace this)
@@ -123,7 +123,8 @@ app.post("/urls", (req, res) => {
 
 app.get("/u/:shortURL", (req, res) => {
 
-  const longURL = urlDatabase[req.params.shortURL].longURL
+  const longURL = urlDatabase[req.params.shortURL]
+  console.log(longURL,"longURL",urlDatabase[req.params.shortURL], "longURL 1212")
   res.redirect(longURL);
 });
 
@@ -134,8 +135,8 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 });
 
 app.post("/urls/:id", (req, res) => {
-  // console.log(req.params)
-  urlDatabase[req.params.id] = req.body.updated_URL;
+   
+  urlDatabase[req.params.id] ={longURL:req.body.updated_URL, userID: req.cookies["user_id"] } ;
   res.redirect("/urls")
 });
 //login request
@@ -205,6 +206,7 @@ app.post("/register", (req, res) => {
       email: req.body.email,
       password: req.body.password
     }
+    console.log(users)
     res.cookie('user_id', generateUserID)
     res.redirect("/urls");
 
