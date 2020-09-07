@@ -99,8 +99,12 @@ app.get("/urls", (req, res) => {
   // const userOb = users[req.cookies("user_id")]
   // old let templateVars = { urls: urlDatabase, username: req.cookies["username"] };
   let templateVars = { urls: urlDatabase, user: users[userOb], userID: req.cookies["user_id"] }
+  if(req.cookies["user_id"]){
   console.log(users[userOb], "userOb")
   res.render("urls_index", templateVars);
+  } else {
+    res.status(404).send("Please register or login before accessing this page")
+  }
 });
 
 app.get("/urls/:shortURL", (req, res) => {
