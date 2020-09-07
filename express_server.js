@@ -211,10 +211,14 @@ app.post("/register", (req, res) => {
   const generateUserID = generateRandomString()
   if (!users[generateUserID] && !getUserby(req.body.email, users, "email", "id")) {
     if (req.body.password) {
+      //plaintext pass entered by user at registration
+      const password = req.body.password
+      // password after hash
+      const hashedPassword = bcrypt.hashSync(password,10)
       users[generateUserID] = {
         id: generateUserID,
         email: req.body.email,
-        password: req.body.password
+        password: hashedPassword
       }
       console.log(users)
       res.cookie('user_id', generateUserID)
