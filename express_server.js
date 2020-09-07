@@ -26,6 +26,7 @@ const users = {
 //said needs to come before routes
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const bcrypt = require('bcrypt');
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }));
 //said outer scope, I think will replace Ok section in post later
