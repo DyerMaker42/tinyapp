@@ -76,13 +76,13 @@ app.get("/urls/new", (req, res) => {
   const userOb = (req.cookies["user_id"])
   // const userOb = users[req.cookies("user_id")]
   // old let templateVars = { urls: urlDatabase, username: req.cookies["username"] };
-  
+
   let templateVars = { urls: urlDatabase, user: users[userOb], userID: userOb }
-  if(userOb){
-  //old let templateVars = { username: req.cookies["username"] }
-  // newerold let templateVars = { users }
-  res.render("urls_new", templateVars);
-  } else { 
+  if (userOb) {
+    //old let templateVars = { username: req.cookies["username"] }
+    // newerold let templateVars = { users }
+    res.render("urls_new", templateVars);
+  } else {
     res.redirect("/login");
   }
 });
@@ -100,9 +100,9 @@ app.get("/urls", (req, res) => {
   // const userOb = users[req.cookies("user_id")]
   // old let templateVars = { urls: urlDatabase, username: req.cookies["username"] };
   let templateVars = { urls: urlDatabase, user: users[userOb], userID: req.cookies["user_id"] }
-  if(req.cookies["user_id"]){
-  console.log(users[userOb], "userOb")
-  res.render("urls_index", templateVars);
+  if (req.cookies["user_id"]) {
+    console.log(users[userOb], "userOb")
+    res.render("urls_index", templateVars);
   } else {
     res.status(404).send("Please register or login before accessing this page")
   }
@@ -117,11 +117,11 @@ app.get("/urls/:shortURL", (req, res) => {
 
 app.post("/urls", (req, res) => {
   console.log(req.body.longURL);
-  
+
   let helperShortUrl = generateRandomString();
-  urlDatabase[helperShortUrl] = {longURL: req.body.longURL, userID: req.cookies["user_id"]}
+  urlDatabase[helperShortUrl] = { longURL: req.body.longURL, userID: req.cookies["user_id"] }
   console.log(urlDatabase)
- 
+
   //console.log(urlDatabase)  // Log the POST request body to the console
   res.redirect(`/urls/${helperShortUrl}`);         // Respond with 'Ok' (we will replace this)
 });
@@ -130,8 +130,8 @@ app.get("/u/:shortURL", (req, res) => {
 
   const longURL = urlDatabase[req.params.shortURL]
   if (longURL) {
-  console.log(longURL,"longURL",urlDatabase[req.params.shortURL].longURL, "longURL 1212");
-  res.redirect(longURL.longURL);
+    console.log(longURL, "longURL", urlDatabase[req.params.shortURL].longURL, "longURL 1212");
+    res.redirect(longURL.longURL);
   } else {
     res.status(404).send("could not find URL you requested")
   }
@@ -144,8 +144,8 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 });
 
 app.post("/urls/:id", (req, res) => {
-   
-  urlDatabase[req.params.id] ={longURL:req.body.updated_URL, userID: req.cookies["user_id"] } ;
+
+  urlDatabase[req.params.id] = { longURL: req.body.updated_URL, userID: req.cookies["user_id"] };
   res.redirect("/urls")
 });
 //login request
@@ -209,16 +209,19 @@ app.post("/register", (req, res) => {
 
   //console.log('user body', req.body)
   const generateUserID = generateRandomString()
-  if (!users[generateUserID]&& !getUserby(req.body.email, users,"email","id")) {
-    users[generateUserID] = {
-      id: generateUserID,
-      email: req.body.email,
-      password: req.body.password
+  if (!users[generateUserID] && !getUserby(req.body.email, users, "email", "id")) {
+    if (req.body.password) {
+      users[generateUserID] = {
+        id: generateUserID,
+        email: req.body.email,
+        password: req.body.password
+      }
+      console.log(users)
+      res.cookie('user_id', generateUserID)
+      res.redirect("/urls");
+    } else {
+      res.status(403).send('<p href=/register> Password is needed to complete registration, please try again. </p>')
     }
-    console.log(users)
-    res.cookie('user_id', generateUserID)
-    res.redirect("/urls");
-
   } else {
     res.status(403).send('<p href=/register> Username already exists please try again. </p>')
   }
