@@ -12,16 +12,10 @@ const urlDatabase = {
 
 //user object
 const users = {
-  "userRandomID": {
-    id: "userRandomID",
-    email: "user@example.com",
-    password: "purple-monkey-dinosaur"
-  },
-  "user2RandomID": {
-    id: "user2RandomID",
-    email: "user2@example.com",
-    password: "dishwasher-funk"
-  }
+  "cvLaB99": { id: 'cvLaB99',
+                    email: '1@2.com',
+                    password:'$2b$10$G21D5mNjmmJ7VDZZX1BIA.WDzgM7dRlsGA7.Hj5ITOWbM7pZ0ghL2' },
+  
 }
 //said needs to come before routes
 const bodyParser = require("body-parser");
@@ -165,7 +159,11 @@ app.post("/login", (req, res) => {
   // }
   //console.log("BODY",req.body.username)
   let postUserID = getUserbyEmail(req.body.email, users)
-  if (getUserby(req.body.email, users, "email", "id") === getUserby(req.body.password, users, "password", "id")) {
+  // old login logic if (getUserby(req.body.email, users, "email", "id") === getUserby(req.body.password, users, "password", "id")) {
+  //below should evalute to true if pass and username match, as first arg is input pass, second is hashed pass associated with input email  
+  const hashedPass = (getUserby(req.body.email, users, "email","password"))
+  const inputPass = req.body.password;
+  if (bcrypt.compareSync(inputPass, hashedPass)) {
     //console.log("if works")
     res.cookie('user_id', postUserID)
     res.redirect("/urls")
